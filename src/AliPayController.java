@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/aliapi")
 public class AliPayController {
 
-	@RequestMapping(value = "/deposit", method = RequestMethod.POST)
+	@RequestMapping(value = "/pay", method = RequestMethod.POST)
 	public String deposit(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		Map<String, String> sParaTemp = new HashMap<String, String>();
 		sParaTemp.put("service", AlipayConfig.service);
