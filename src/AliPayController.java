@@ -1,6 +1,12 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
 import config.AlipayConfig;
+import util.AlipayNotify;
 import util.AlipaySubmit;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import util.UtilDate;
 
 @RestController
 @RequestMapping(value = "api/ali")
@@ -42,7 +49,7 @@ public class AliPayController {
 		System.out.println("ok!!!!!");
 		Map<String, String> params = new HashMap<String, String>();
 		Map<?, ?> requestParams = request.getParameterMap();
-		for (Iterator<?> iter = requestParams.keySet().iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
 			String name = (String) iter.next();
 			String[] values = (String[]) requestParams.get(name);
 			String valueStr = "";
@@ -65,5 +72,31 @@ public class AliPayController {
 		} else {// 验证失败
 			return "fail";
 		}
+	}
+
+	@RequestMapping(value = "/refund", method = RequestMethod.POST)
+	public String refund(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+
+		Map<String, String> sParaTemp = new HashMap<String, String>();
+		sParaTemp.put("service", AlipayConfig.refund_service);
+		sParaTemp.put("partner", AlipayConfig.partner);
+		sParaTemp.put("seller_user_id", AlipayConfig.seller_id);
+		sParaTemp.put("_input_charset", AlipayConfig.input_charset);
+		sParaTemp.put("notify_url", AlipayConfig.notify_url + "/refund");
+		DateFormat dft = new SimpleDateFormat("yyyyMMdd");
+		sParaTemp.put("refund_date", UtilDate.getDateFormatter());
+		sParaTemp.put("batch_no", dft.format(new Date()) + "123");
+		sParaTemp.put("batch_num", "1");
+		sParaTemp.put("detail_data",
+				request.getParameter("tradeNo") + "^" + request.getParameter("price") + "^" + request.getParameter("reason"));
+
+		// 建立请求
+		String sHtmlText = AlipaySubmit.buildRequest(sParaTemp, "get", "确认");
+		return sHtmlText;
+	}
+
+	@RequestMapping(value = "/refund/result")
+	public String refundBack(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return "test";
 	}
 }

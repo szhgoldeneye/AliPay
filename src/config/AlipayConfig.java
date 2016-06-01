@@ -45,6 +45,8 @@ public class AlipayConfig {
 	// 调用的接口名，无需修改
 	public static String service = "create_direct_pay_by_user";
 
+	public static String refund_service = "refund_fastpay_by_platform_pwd";
+
 
 //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 	
