@@ -25,13 +25,12 @@
 ## 接口参数 ##
 
 | 参数 | 参数说明 | 样例 |
-| - | - | - |
+| --- | --- | --- |
 |service|支付宝生成订单接口名称|create_direct_pay_by_user|
 |partner|合作者身份ID|2088101011913539|
 |seller_id|卖家支付宝用户号|2088002007018966|
-|_input_charset|商户网站使用的编码格式|utf-8|
 |payment_type|支付类型,只支持取值为1（商品购买）|1|
-|notify_url|服务器异步通知页面路径|http://o2o.cloume.com/client-web/api/ali/result|
+|notify_url|服务器异步通知页面路径|http://o2o.cloume.com/client-web/api/ali/result |
 |out_trade_no|商户网站唯一订单号|6843192280647118|
 |subject|商品的标题/交易标题/订单标题/订单关键字等。|Ipad mini|
 |total_fee|该笔订单的资金总额，单位为RMB-Yuan。取值范围为[0.01，100000000.00]，精确到小数点后两位|100|
